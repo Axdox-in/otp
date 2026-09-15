@@ -32,13 +32,15 @@ async function loadProject(projectId: string): Promise<ProjectConfig> {
 }
 
 /** Resolve which provider serves a given channel for a given country. */
-function providerFor(channel: Channel, country?: string): SendProvider | null {
+function providerFor(channel: Channel, country: string | undefined, simulate: boolean): SendProvider | null {
+  // TEST keys (or local dev echo) never send real messages — they simulate
+  // delivery and echo the code. This keeps test usage free and makes demos
+  // work for any recipient. LIVE keys use the real providers.
+  if (simulate) return devProvider(channel);
   let provider: SendProvider | null = null;
   if (channel === "whatsapp") provider = whatsappProvider.isAvailable(country) ? whatsappProvider : null;
   else if (channel === "sms") provider = selectSmsProvider(country);
   else if (channel === "email") provider = selectEmailProvider();
-  // In local dev with echo enabled, fall back to the console provider so the
-  // full send → verify flow works without any real provider configured.
   if (!provider && devEchoEnabled()) provider = devProvider(channel);
   return provider;
 }
@@ -49,6 +51,7 @@ export interface SendParams {
   emailFallback?: string;  // optional email for final fallback when `to` is a phone
   ip: string | null;
   forceChannel?: Channel;  // override auto cascade
+  simulate?: boolean;      // true for test keys — echo the code, never send real
   metadata?: Record<string, unknown>;
 }
 
@@ -127,8 +130,9 @@ export async function sendVerification(p: SendParams): Promise<SendOutcome> {
 
   // Run the cascade.
   let delivered: { channel: Channel } | null = null;
+  const simulate = p.simulate ?? false;
   for (const step of plan) {
-    const provider = providerFor(step.channel, country);
+    const provider = providerFor(step.channel, country, simulate);
     if (!provider) continue; // no configured provider for this channel — skip
 
     const result = await provider.send({
@@ -179,7 +183,7 @@ export async function sendVerification(p: SendParams): Promise<SendOutcome> {
     channel: delivered.channel,
     recipientMasked: primary.masked,
     expiresAt,
-    devCode: devEchoEnabled() ? code : undefined,
+    devCode: devEchoEnabled() || simulate ? code : undefined,
   };
 }
 

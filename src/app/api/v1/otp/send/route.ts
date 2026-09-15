@@ -33,6 +33,8 @@ export async function POST(req: Request) {
       emailFallback: parsed.data.email_fallback,
       forceChannel: parsed.data.channel,
       ip: clientIp(req),
+      // Test keys simulate delivery (echo the code); live keys send for real.
+      simulate: auth.env === "test",
       metadata: parsed.data.metadata,
     });
 
