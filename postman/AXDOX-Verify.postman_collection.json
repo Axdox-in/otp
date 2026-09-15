@@ -1,0 +1,48 @@
+{
+  "info": {
+    "name": "AXDOX Verify API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.axdox.com" },
+    { "key": "apiKey", "value": "axk_live_xxx" },
+    { "key": "requestId", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{apiKey}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Send OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/otp/send",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"+14155552671\",\n  \"email_fallback\": \"user@acme.com\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Verify OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/v1/otp/verify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"request_id\": \"{{requestId}}\",\n  \"code\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Status",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/otp/status?request_id={{requestId}}"
+      }
+    }
+  ]
+}
