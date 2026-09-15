@@ -35,7 +35,7 @@ const serverSchema = z.object({
   GUPSHUP_API_KEY: z.string().optional(),
   GUPSHUP_SOURCE: z.string().optional(),
 
-  EMAIL_FROM: z.string().default("AXDOX Verify <verify@axdox.com>"),
+  EMAIL_FROM: z.string().default("AXDOX Verify <verify@axdox.in>"),
   RESEND_API_KEY: z.string().optional(),
   SENDGRID_API_KEY: z.string().optional(),
   AWS_REGION: z.string().default("us-east-1"),

@@ -1,6 +1,6 @@
 // Multi-language code samples for the docs. Base URL is a placeholder —
 // replace `API` with your real deployment URL.
-export const API = "https://api.axdox.com";
+export const API = "https://api.axdox.in";
 
 type Tab = { label: string; code: string };
 

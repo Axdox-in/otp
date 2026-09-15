@@ -7,7 +7,7 @@ Dashboard → **API Keys** → *Create key*. Copy the `axk_live_…` secret (sho
 
 ## 2. Send a code
 ```bash
-curl -X POST https://api.axdox.com/api/v1/otp/send \
+curl -X POST https://api.axdox.in/api/v1/otp/send \
   -H "Authorization: Bearer axk_live_xxx" \
   -H "Content-Type: application/json" \
   -d '{ "to": "+14155552671", "email_fallback": "user@acme.com" }'
@@ -19,7 +19,7 @@ curl -X POST https://api.axdox.com/api/v1/otp/send \
 
 ## 3. Verify the code
 ```bash
-curl -X POST https://api.axdox.com/api/v1/otp/verify \
+curl -X POST https://api.axdox.in/api/v1/otp/verify \
   -H "Authorization: Bearer axk_live_xxx" \
   -H "Content-Type: application/json" \
   -d '{ "request_id": "8f3c…", "code": "482915" }'

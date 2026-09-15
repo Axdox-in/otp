@@ -43,7 +43,7 @@ export class Axdox {
   constructor(opts: AxdoxOptions) {
     if (!opts.apiKey) throw new Error("apiKey is required");
     this.apiKey = opts.apiKey;
-    this.baseUrl = (opts.baseUrl ?? "https://api.axdox.com").replace(/\/$/, "");
+    this.baseUrl = (opts.baseUrl ?? "https://api.axdox.in").replace(/\/$/, "");
   }
 
   private async request<T>(method: string, path: string, body?: unknown): Promise<T> {

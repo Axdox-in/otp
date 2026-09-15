@@ -14,7 +14,7 @@ class Axdox {
     private string $apiKey;
     private string $baseUrl;
 
-    public function __construct(string $apiKey, string $baseUrl = "https://api.axdox.com") {
+    public function __construct(string $apiKey, string $baseUrl = "https://api.axdox.in") {
         if (!$apiKey) throw new \InvalidArgumentException("apiKey is required");
         $this->apiKey = $apiKey;
         $this->baseUrl = rtrim($baseUrl, "/");

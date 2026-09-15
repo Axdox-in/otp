@@ -13,7 +13,7 @@ class AxdoxError(Exception):
 
 
 class Axdox:
-    def __init__(self, api_key: str, base_url: str = "https://api.axdox.com"):
+    def __init__(self, api_key: str, base_url: str = "https://api.axdox.in"):
         if not api_key:
             raise ValueError("api_key is required")
         self.api_key = api_key
