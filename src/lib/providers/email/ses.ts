@@ -23,7 +23,9 @@ export const sesProvider: SendProvider = {
   name: "amazon_ses",
   channel: "email",
   isAvailable() {
-    return Boolean(process.env.AWS_ACCESS_KEY_ID || process.env.AWS_REGION);
+    // Require real credentials — AWS_REGION alone (it has a default) does not
+    // mean SES is configured, or it would be chosen ahead of Resend and fail.
+    return Boolean(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY);
   },
   send(input) {
     return runSend(this.name, async () => {
